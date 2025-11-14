@@ -5,7 +5,7 @@ interface CheckResult {
   error: boolean
 }
 
-// Tambahkan interface untuk API response
+// Interface untuk API response
 interface DomainResult {
   blocked: boolean
   [key: string]: any
@@ -24,14 +24,18 @@ export async function checkBatch(domains: string[]): Promise<CheckResult[]> {
     url.searchParams.append('json', 'true')
 
     const response = await fetch(url.toString(), {
-      method: 'GET'
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      }
     })
 
     if (!response.ok) {
+      // FIX: Gunakan parentheses () untuk Error constructor
       throw new Error(`API request failed: ${response.statusText}`)
     }
 
-    // Type assertion untuk data dengan interface yang sudah didefinisikan
+    // Type assertion untuk data
     const data = await response.json() as ApiResponse
 
     if (!data || typeof data !== 'object') {
@@ -40,7 +44,7 @@ export async function checkBatch(domains: string[]): Promise<CheckResult[]> {
 
     return domains.map(domain => {
       try {
-        const result = data[domain] // Sekarang TypeScript tahu bahwa data bisa diindex dengan string
+        const result = data[domain]
 
         if (!result || typeof result !== 'object') {
           return {
@@ -58,6 +62,7 @@ export async function checkBatch(domains: string[]): Promise<CheckResult[]> {
           error: false
         }
       } catch (err) {
+        // FIX: Gunakan parentheses () untuk console.error
         console.error(`Error processing domain ${domain}:`, err)
         return {
           originalUrl: domain,
