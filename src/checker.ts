@@ -5,7 +5,17 @@ interface CheckResult {
   error: boolean
 }
 
-const API_ENDPOINT = 'https://check.skiddle.id'
+// Tambahkan interface untuk API response
+interface DomainResult {
+  blocked: boolean
+  [key: string]: any
+}
+
+interface ApiResponse {
+  [domain: string]: DomainResult
+}
+
+const API_ENDPOINT = 'https://etools.biz.id/nawala/api.php'
 
 export async function checkBatch(domains: string[]): Promise<CheckResult[]> {
   try {
@@ -21,7 +31,8 @@ export async function checkBatch(domains: string[]): Promise<CheckResult[]> {
       throw new Error(`API request failed: ${response.statusText}`)
     }
 
-    const data = await response.json()
+    // Type assertion untuk data dengan interface yang sudah didefinisikan
+    const data = await response.json() as ApiResponse
 
     if (!data || typeof data !== 'object') {
       throw new Error('Invalid API response format')
@@ -29,7 +40,8 @@ export async function checkBatch(domains: string[]): Promise<CheckResult[]> {
 
     return domains.map(domain => {
       try {
-        const result = data[domain]
+        const result = data[domain] // Sekarang TypeScript tahu bahwa data bisa diindex dengan string
+
         if (!result || typeof result !== 'object') {
           return {
             originalUrl: domain,
@@ -38,6 +50,7 @@ export async function checkBatch(domains: string[]): Promise<CheckResult[]> {
             error: true
           }
         }
+
         return {
           originalUrl: domain,
           status: result.blocked ? 'Blocked' : 'Not Blocked',
