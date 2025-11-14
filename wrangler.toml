@@ -14,7 +14,7 @@ DATABASE_AUTH_TOKEN = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJnaWQi
 DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1402936397114900490/HnroSmu5L_2Au5xOr6isvbNxFODQB1fI2r9paLIsfAnmfR-0Z-0Tnr4aGaujQkw72Mks"
 
 [[routes]]
-pattern = "nawalacheck.skiddle.id"
+pattern = "https://etools.biz.id/nawala/api.php"
 custom_domain = true
 
 [observability.logs]
