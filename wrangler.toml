@@ -2,20 +2,25 @@ name = "domain-checker"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
+# Variabel environment - ISI DENGAN TOKEN ANDA
 [vars]
+# Database Turso
 DATABASE_URL = "libsql://domainchecker-arcestia.turso.io"
 DATABASE_AUTH_TOKEN = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJnaWQiOiJmYTg3MTc1YS02NDMxLTRkNDUtYTk2MS03YjhkN2FhYTNhZTIiLCJpYXQiOjE3MzU1MzI2NDB9.xiY8s2CW4l5CLLhzWU1ql5ocPt5BrurmosIgC28KO8bUn3yg-a2spBFrS4rZJlY1GwT1kzkBCsKG1IhP7RzsBA"
+
+# Discord Webhook (opsional, untuk notifikasi)
 DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1402936397114900490/HnroSmu5L_2Au5xOr6isvbNxFODQB1fI2r9paLIsfAnmfR-0Z-0Tnr4aGaujQkw72Mks"
 
-# Development variables will be the same as production
-[vars.dev]
-DATABASE_URL = "libsql://domainchecker-arcestia.turso.io"
-DATABASE_AUTH_TOKEN = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJnaWQiOiJmYTg3MTc1YS02NDMxLTRkNDUtYTk2MS03YjhkN2FhYTNhZTIiLCJpYXQiOjE3MzU1MzI2NDB9.xiY8s2CW4l5CLLhzWU1ql5ocPt5BrurmosIgC28KO8bUn3yg-a2spBFrS4rZJlY1GwT1kzkBCsKG1IhP7RzsBA"
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1402936397114900490/HnroSmu5L_2Au5xOr6isvbNxFODQB1fI2r9paLIsfAnmfR-0Z-0Tnr4aGaujQkw72Mks"
+# API Nawala untuk cek domain
+NAWALA_API_ENDPOINT = "https://etools.biz.id/nawala/api.php"
 
-[[routes]]
-pattern = "https://etools.biz.id/nawala/api.php"
-custom_domain = true
+# Rate limiting settings
+RATE_LIMIT_MAX = "1000"
+RATE_LIMIT_WINDOW = "600"
+
+# Logging settings
+[observability]
+enabled = true
 
 [observability.logs]
-enabled = false
+enabled = true
